@@ -40,7 +40,8 @@ Buscar en Gencode https://www.gencodegenes.org/ (en caso de ser datos de humano 
 2. Archivo FASTA.
 3. Archivo primary_assembly.genome.
 
-Estos se guardan en una carpeta llamada "Salmon_reference" dentro de "data".
+Estos deben ser guardados en una carpeta que nombrarás "Salmon_reference" dentro de "data".
+Comando a la altura de carpeta Molecular_clock: "mkdir data/Salmon_reference".
 
 ###  Indexar tu genoma y transcriptoma para obtener los estimados de cuantificación adecuados (accurate quantification estimates).
 (Remplazar los x con los nombres de tus archivos)
@@ -74,14 +75,17 @@ x3 = nombre de archivo annotation.gtf
 Correr parado en la carpeta Molecular_clock: awk -f scripts/tx2gene.awk data/Salmon_reference/x3 > results/tx2gene_awk.tsv
 
 ### Creación de matrices con tximport 
+Crea la carpeta corriendo en la carpeta Molecular_clock este comando (en caso de que el código no funcione por no poder crear la carpeta): "mkdir results/count_matrix"
+
 Se corre el código "tximport.R" creando la matriz raw de los pseudocounts de las muestras.
-Se guarda la salida de counts y de objeto tximport en results/count_matrix.
 
 Correr parado en la carpeta Molecular_clock: "Rscript scripts/tximport.R"
 
 La salida del proceso (matriz con transcritos) se guarda en "Molecular_clock/results/count_matrix"
 
 ### Normalización de matriz
+Crea la carpeta corriendo en la carpeta Molecular_clock este comando (en caso de que el código no funcione por no poder crear la carpeta): "mkdir results/normalized_matrix"
+
 Se corre el código "NormalizationDeseq2.R" para normalizar las proporciones de secuencias y retirar transcritos poco expresados. 
 
 Correr parado en la carpeta Molecular_clock: "Rscript scripts/NormalizationDeseq2.R"
@@ -102,7 +106,7 @@ OJO. Puedes considerar correr "nohup python3 Permutation_test.py &" para que se 
 
 La salida se guarda en "/results/permutation_genes"
 
-### Matriz con niveles de expresiín en percentiles
+### Matriz con niveles de expresión en percentiles
 Correr el script "percentil_filtered_genes.py" parado en la carpeta scripts. 
 
 Salida del código en "results/percentil_matrix"

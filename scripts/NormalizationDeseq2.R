@@ -30,5 +30,8 @@ dds_filtered <- dds[keep, ]
 # Extraer la matriz de conteos normalizados (y filtrados)
 conteos_normalizados <- counts(dds_filtered, normalized = TRUE)
 
+# Crear la carpeta si no existe
+dir.create("results/normalized_matrix", recursive = TRUE, showWarnings = FALSE)
+
 # Guardar como archivo tsv para usar en análisis posteriores
 write.table(conteos_normalizados, file = "results/normalized_matrix/normalized_counts.tsv", sep = "\t")

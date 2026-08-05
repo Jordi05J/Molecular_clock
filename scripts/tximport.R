@@ -32,8 +32,10 @@ tx_matrix <- tximport(vector, type="salmon", tx2gene=tx2gene, ignoreTxVersion = 
 
 colnames(tx_matrix$counts) <- samples
 
-# Guardamos matriz de conteos y objeto txi para usar en DESeq2
+# Crear la carpeta si no existe
+dir.create("results/count_matrix", recursive = TRUE, showWarnings = FALSE)
 
+# Guardamos matriz de conteos y objeto txi para usar en DESeq2
 write.table(tx_matrix$counts, file = "results/count_matrix/tximport_counts.tsv")
 
 saveRDS(tx_matrix, file = "results/count_matrix/txi_data.rds")
