@@ -1,0 +1,12 @@
+data/*/*
+
+results/count_matrix
+results/fastqc
+results/multiqc/multiqc_data
+results/permutation_genes/*05*
+results/permutation_genes/*01*
+results/permutation_genes/GO_list
+results/salmon_results/*
+results/tx2gene_awk.tsv
+
+scripts/*ipynb
