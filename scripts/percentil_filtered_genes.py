@@ -59,7 +59,9 @@ if __name__ == "__main__":
                                 sep = '\t', header=0, index_col=0)
     
     df_filtered = filter_genes(df_norm_matrix, df_perm_genes)
+
+    df_filtered.to_csv("../results/percentil_matrix/raw.tsv", sep = '\t')
     
     df_percentil = percentil_matrix(df_filtered)
     
-    df_filtered.to_csv("../results/percentil_matrix/raw.tsv", sep = '\t')
+    df_percentil.to_csv("../results/percentil_matrix/percentil.tsv", sep = '\t')
