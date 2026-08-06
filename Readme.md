@@ -75,8 +75,6 @@ x3 = nombre de archivo annotation.gtf
 Correr parado en la carpeta Molecular_clock: awk -f scripts/tx2gene.awk data/Salmon_reference/x3 > results/tx2gene_awk.tsv
 
 ### Creación de matrices con tximport 
-Crea la carpeta corriendo en la carpeta Molecular_clock este comando (en caso de que el código no funcione por no poder crear la carpeta): "mkdir results/count_matrix"
-
 Se corre el código "tximport.R" creando la matriz raw de los pseudocounts de las muestras.
 
 Correr parado en la carpeta Molecular_clock: "Rscript scripts/tximport.R"
@@ -84,8 +82,6 @@ Correr parado en la carpeta Molecular_clock: "Rscript scripts/tximport.R"
 La salida del proceso (matriz con transcritos) se guarda en "Molecular_clock/results/count_matrix"
 
 ### Normalización de matriz
-Crea la carpeta corriendo en la carpeta Molecular_clock este comando (en caso de que el código no funcione por no poder crear la carpeta): "mkdir results/normalized_matrix"
-
 Se corre el código "NormalizationDeseq2.R" para normalizar las proporciones de secuencias y retirar transcritos poco expresados. 
 
 Correr parado en la carpeta Molecular_clock: "Rscript scripts/NormalizationDeseq2.R"

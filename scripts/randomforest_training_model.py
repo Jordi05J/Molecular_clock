@@ -3,6 +3,7 @@
 # ======================================
 import pandas as pd
 import numpy as np
+import os
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -45,11 +46,11 @@ def split_data(data):
     X = data.drop('age', axis=1)
     y = data['age']
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
     
     return X_train, X_test, y_train, y_test
 
-def random_forest_model(X_train, y_train, X_test, y_test):
+def random_forest_model(X_train, y_train, X_test, y_test, images_dir):
     '''
     Entrena un modelo de regresión Random Forest.
     
@@ -60,11 +61,12 @@ def random_forest_model(X_train, y_train, X_test, y_test):
     Returns:
         RandomForestRegressor: Modelo entrenado de regresión Random Forest.
     '''
+    os.makedirs(images_dir, exist_ok=True)
     r2_scores = []
     n_estimators = [50, 100, 200, 300, 500]
     models = {}
     for n in n_estimators:
-        model = RandomForestRegressor(n_estimators=n, random_state=42)
+        model = RandomForestRegressor(n_estimators=n, random_state=1)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         models[n] = model
@@ -79,7 +81,7 @@ def random_forest_model(X_train, y_train, X_test, y_test):
         plt.xlabel("True Age")
         plt.ylabel("Predicted Age")
         plt.title(f"Random Forest ({n} trees)")
-        plt.savefig(f'../results/prediction_error_n_{n}.png')
+        plt.savefig(f'{images_dir}/prediction_error_n_{n}.png')
     return n_estimators, r2_scores, models
 
 # ======================================
@@ -87,7 +89,7 @@ def random_forest_model(X_train, y_train, X_test, y_test):
 # ======================================
 
 if __name__ == "__main__":
-    # Caragmos dataset y tabla de metadatos
+    # Caragmos dataset y tabla de metadatos (cambia el nombre para analizar raw.tsv/percentil.tsv)
     data = pd.read_csv('../results/percentil_matrix/raw.tsv', sep='\t', header=0, index_col=0)
     data = data.T
     SraTable = pd.read_csv('../data/SraRunTable.csv')
@@ -105,9 +107,10 @@ if __name__ == "__main__":
     # Dividimos el dataset en conjuntos de entrenamiento y prueba
     X_train, X_test, y_train, y_test = split_data(data_age)
     
-    
+    # Cambia el nombre del directorio para las imágenes (percentil_matrix o raw_matrix por ejemplo)
+    images_dir = '../results/images/raw_matrix'
     # Entrenamos el modelo de regresión Random Forest
-    n_estimators, r2_scores, models = random_forest_model(X_train, y_train, X_test, y_test)
+    n_estimators, r2_scores, models = random_forest_model(X_train, y_train, X_test, y_test, images_dir)
     
     # Graficamos la mandamos a results
     
@@ -118,20 +121,5 @@ if __name__ == "__main__":
     plt.ylabel('R2 Score')
     plt.xticks(n_estimators)
     plt.grid()
-    plt.savefig('../results/r2_scores.png')
+    plt.savefig(f'{images_dir}/r2_score.png')
     
-    """
-    from sklearn.model_selection import cross_val_score
-
-    model = RandomForestRegressor(n_estimators=n, random_state=42)
-
-    scores = cross_val_score(
-        model,
-        X,
-        y,
-        cv=5,
-        scoring="r2"
-    )
-
-    print(scores.mean())    
-"""

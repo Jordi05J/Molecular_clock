@@ -6,21 +6,7 @@ import pandas as pd
 
 # =====================================
 #           FUNCTIONS
-# =====================================
-
-def square_matrix(rute_to_matrix):
-    '''
-    Eleva al cuadrado las reads normaiizadas de la matriz de conteos 
-    
-    Args:
-        rute_to_matrix (str): Ruta al archivo de la matriz de distancias con formato largo (long format).
-    
-    Returns:
-        pd.DataFrame: Matriz de distancias en formato cuadrado (square format).
-    '''
-    matrix = pd.read_csv(rute_to_matrix, sep="\t", index_col=0)
-    matrix2 = matrix ** 2
-    return matrix2
+# ===================================== 
 
 def filter_genes(df_norm_matrix, df_perm_genes):
     '''
@@ -72,11 +58,13 @@ if __name__ == "__main__":
                                 sep = '\t', header=0, index_col=0)
    
     df_filtered = filter_genes(df_norm_matrix, df_perm_genes)
-    # Matriz con cantidad de transcritos significativos con valores normalizados
+    # Matriz con transcritos significativos con valores normalizados
     df_filtered.to_csv("../results/percentil_matrix/raw.tsv", sep = '\t')
+    print("Matriz raw generada correctamente en ../results/percentil_matrix nombrada como raw.tsv")
 
 
-    df_square_norm_matrix = square_matrix(df_filtered)
+    df_square_norm_matrix = df_filtered ** 2
     df_percentil = percentil_matrix(df_square_norm_matrix)
-    
+    # Matriz con transcritos significativos con valores normalizados al cuadrado y con percentiles 1-100
     df_percentil.to_csv("../results/percentil_matrix/percentil.tsv", sep = '\t')
+    print("Matriz de percentiles generada correctamente en ../results/percentil_matrix nombrada como percentil.tsv")
