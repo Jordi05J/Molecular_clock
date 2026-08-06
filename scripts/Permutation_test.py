@@ -227,7 +227,7 @@ if __name__ == "__main__":
 
     print("Realizando test de permutación... ", datetime.now())
     age_range = 10
-    permutations = 1000
-    name = "1000_significant_genes_1padj_2025_04_17.tsv"
+    permutations = 10000
+    name = "10000_significant_genes_1padj_2026_04_17.tsv"
     pvadj = 0.1
     permutation_test(matrix2, dic_SRR_age, age_range, permutations, name, pvadj)
